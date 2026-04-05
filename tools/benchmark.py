@@ -1,6 +1,7 @@
 import json
 import re
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -14,11 +15,49 @@ def load_config():
 
 
 def extract_max_memory_kb(stderr_text: str):
-    match = re.search(
-        r"Maximum resident set size \(kbytes\):\s+(\d+)", stderr_text)
+    match = re.search(r"Maximum resident set size \(kbytes\):\s+(\d+)", stderr_text)
     if match:
         return int(match.group(1))
     return None
+
+
+def build_command(language: str, problem_name: str):
+    if language == "python":
+        return f"python3 languages/python/src/{problem_name}.py"
+
+    if language == "go":
+        return f"go run languages/go/src/{problem_name}.go"
+
+    if language == "java":
+        class_name = "".join(word.capitalize() for word in problem_name.split("_"))
+        return (
+            "bash -lc "
+            f"'mkdir -p languages/java/bin && "
+            f"javac -d languages/java/bin languages/java/src/{class_name}.java && "
+            f"java -cp languages/java/bin {class_name}'"
+        )
+
+    if language == "rust":
+        return "cargo run --manifest-path languages/rust/Cargo.toml"
+
+    if language == "cpp":
+        return (
+            "bash -lc "
+            f"'mkdir -p languages/cpp/bin && "
+            f"g++ -O2 -std=c++17 languages/cpp/src/{problem_name}.cpp "
+            f"-o languages/cpp/bin/{problem_name} && "
+            f"./languages/cpp/bin/{problem_name}'"
+        )
+
+    if language == "typescript":
+        return (
+            "bash -lc "
+            f"'cd languages/typescript && "
+            f"npm run build && "
+            f"node dist/{problem_name}.js'"
+        )
+
+    raise ValueError(f"Unsupported language: {language}")
 
 
 def run_benchmark(name: str, command: str):
@@ -47,14 +86,17 @@ def run_benchmark(name: str, command: str):
 
 
 def main():
+    problem_name = sys.argv[1] if len(sys.argv) > 1 else "contains_duplicate"
+
     config = load_config()
     results = []
 
-    for language, details in config.items():
-        print(f"Running benchmark for {language}...")
-        results.append(run_benchmark(language, details["command"]))
+    for language in config.keys():
+        command = build_command(language, problem_name)
+        print(f"Running benchmark for {language} on {problem_name}...")
+        results.append(run_benchmark(language, command))
 
-    print("\nBenchmark Results")
+    print(f"\nBenchmark Results for {problem_name}")
     print("-" * 72)
     print(f"{'Language':<12} {'Status':<8} {'Time (s)':<12} {'Max RSS (KB)':<15}")
     print("-" * 72)
@@ -62,10 +104,8 @@ def main():
     for result in results:
         status = "OK" if result["returncode"] == 0 else "FAILED"
         time_str = f"{result['elapsed_seconds']:.6f}"
-        mem_str = str(result["max_memory_kb"]
-                      ) if result["max_memory_kb"] is not None else "N/A"
-        print(
-            f"{result['language']:<12} {status:<8} {time_str:<12} {mem_str:<15}")
+        mem_str = str(result["max_memory_kb"]) if result["max_memory_kb"] is not None else "N/A"
+        print(f"{result['language']:<12} {status:<8} {time_str:<12} {mem_str:<15}")
 
     print("-" * 72)
 

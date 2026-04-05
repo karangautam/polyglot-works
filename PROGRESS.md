@@ -25,3 +25,39 @@
 - [x] Added benchmark runner
 - [x] Measured speed and memory across languages
 - [x] Added Makefile shortcuts
+- [x] Added reusable problem template
+- [x] Added new problem scaffolding script
+
+## Problems completed
+
+- [x] Contains Duplicate
+
+## Problem scaffolds created
+
+- [x] Two Sum
+
+## Problem backlog
+
+- [ ] Valid Anagram
+- [ ] Group Anagrams
+- [ ] Top K Frequent Elements
+- [ ] Product Except Self
+- [ ] Longest Substring Without Repeating
+- [ ] Valid Parentheses
+- [ ] Daily Temperatures
+- [ ] Reverse Linked List
+- [ ] Binary Search
+- [ ] Maximum Depth Binary Tree
+- [ ] Number of Islands
+- [ ] Merge Intervals
+- [ ] K Closest Points to Origin
+- [ ] Coin Change
+
+## Languages implemented for Contains Duplicate
+
+- [x] Python
+- [x] Go
+- [x] Java
+- [x] Rust
+- [x] C++
+- [x] TypeScript
