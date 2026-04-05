@@ -1,0 +1,12 @@
+{
+  "name": "typescript-dsa",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/contains_duplicate.js"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  }
+}

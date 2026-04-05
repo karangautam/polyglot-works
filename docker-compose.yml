@@ -1,0 +1,9 @@
+services:
+  dev:
+    build: .
+    container_name: polyglot-works
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    stdin_open: true
+    tty: true
