@@ -76,3 +76,19 @@ make run-ts
 ### Dynamic Programming
 
 - `coin_change`
+
+## Useful commands
+
+```bash
+make shell
+make benchmark
+make benchmark PROBLEM=two_sum
+make ts-install
+make run-python
+make run-python PROBLEM=two_sum
+make run-go PROBLEM=two_sum
+make run-java PROBLEM=two_sum
+make run-rust
+make run-cpp PROBLEM=two_sum
+make run-ts PROBLEM=two_sum
+```

@@ -23,7 +23,7 @@ def main():
     python_file = ROOT / "languages" / "python" / "src" / f"{problem_name}.py"
     go_file = ROOT / "languages" / "go" / "src" / f"{problem_name}.go"
     java_file = ROOT / "languages" / "java" / "src" / f"{snake_to_pascal(problem_name)}.java"
-    rust_file = ROOT / "languages" / "rust" / "src" / "main.rs"
+    rust_file = ROOT / "languages" / "rust" / "src" / "bin" / f"{problem_name}.rs"
     cpp_file = ROOT / "languages" / "cpp" / "src" / f"{problem_name}.cpp"
     ts_file = ROOT / "languages" / "typescript" / "src" / f"{problem_name}.ts"
 
@@ -36,20 +36,16 @@ def main():
     else:
         (problem_dir / "README.md").write_text(f"# {problem_name}\n")
 
-    for path in [python_file, go_file, java_file, cpp_file, ts_file]:
+    for path in [python_file, go_file, java_file, rust_file, cpp_file, ts_file]:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.touch(exist_ok=True)
-
-    rust_file.parent.mkdir(parents=True, exist_ok=True)
-    if not rust_file.exists():
-        rust_file.touch()
 
     print(f"Created scaffold for problem: {problem_name}")
     print(f"- {problem_dir / 'README.md'}")
     print(f"- {python_file}")
     print(f"- {go_file}")
     print(f"- {java_file}")
-    print(f"- {rust_file} (shared Rust entrypoint)")
+    print(f"- {rust_file}")
     print(f"- {cpp_file}")
     print(f"- {ts_file}")
 

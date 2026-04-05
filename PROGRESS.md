@@ -23,10 +23,14 @@
 - [x] Added first TypeScript DSA problem
 - [x] Ran first TypeScript program in container
 - [x] Added benchmark runner
-- [x] Measured speed and memory across languages
+- [x] Measured speed and memory across
+      languages
 - [x] Added Makefile shortcuts
 - [x] Added reusable problem template
 - [x] Added new problem scaffolding script
+- [x] Made Makefile problem-aware with default problem
+- [x] Made Rust layout problem-aware
+- [x] Made benchmark runner Rust problem-aware
 
 ## Problems completed
 
